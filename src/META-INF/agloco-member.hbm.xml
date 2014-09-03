@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false">
+
+	<class name="com.agloco.model.AGMember" table="AG_Member" dynamic-update="true" dynamic-insert="true">
+		<id name="memberId" column="memberId">
+			<generator class="native">
+			</generator>
+		</id>
+
+		<!--property name="memberCode" formula="AES_DECRYPT(memberCode, 'agloco')"/-->
+		<property name="password" formula="AES_DECRYPT(password_, 'agloco')"/>
+		<property name="firstName" formula="AES_DECRYPT(firstName, 'agloco')"/>
+		<property name="middleName" formula="AES_DECRYPT(middleName, 'agloco')"/>
+		<property name="lastName" formula="AES_DECRYPT(lastName, 'agloco')"/>
+		<!--property name="emailAddress" formula="AES_DECRYPT(emailAddress, 'agloco')"/-->
+		<property name="birthDate" formula="AES_DECRYPT(birthDate, 'agloco')"/>
+		<property name="address1" formula="AES_DECRYPT(address1, 'agloco')"/>
+		<property name="address2" formula="AES_DECRYPT(address2, 'agloco')"/>
+		<property name="city" formula="AES_DECRYPT(city, 'agloco')"/>
+		<property name="state" formula="AES_DECRYPT(state_, 'agloco')"/>
+		<property name="postCode" formula="AES_DECRYPT(postCode, 'agloco')"/>
+		<property name="country" formula="AES_DECRYPT(country, 'agloco')"/>
+
+		<!--property name="encMemberCode" column="memberCode"/-->
+		<property name="encPassword" column="password_"/>
+		<property name="encFirstName" column="firstName"/>
+		<property name="encMiddleName" column="middleName"/>
+		<property name="encLastName" column="lastName"/>
+		<!--property name="encEmailAddress" column="emailAddress"/-->
+		<property name="encBirthDate" column="birthDate"/>
+		<property name="encAddress1" column="address1"/>
+		<property name="encAddress2" column="address2"/>
+		<property name="encCity" column="city"/>
+		<property name="encState" column="state_"/>
+		<property name="encPostCode" column="postCode"/>
+		<property name="encCountry" column="country"/>
+
+		<property name="memberCode" column="memberCode"/>
+		<property name="emailAddress" column="emailAddress"/>
+		<property name="createDate" column="createDate"/>
+		<property name="modifiedDate" column="modifiedDate"/>
+		<property name="status" column="status"/>
+		<property name="reserved1" column="reserved1"/>
+		<property name="reserved2" column="reserved2"/>
+		<property name="reserved3" column="reserved3"/>
+		<property name="userId" column="userId"/>
+		<!--many-to-one name="agUser" column="userId" class="com.agloco.model.AGUser" cascade="none" lazy="no-proxy"/-->
+	</class>
+	
+	<class name="com.agloco.model.AGMemberTree" table="AG_M_Tree" dynamic-update="true" dynamic-insert="true">
+		<composite-id name="primaryKey" class="com.agloco.model.AGMemberTreePK">
+			<key-property name="memberId" column="memberId"/>
+			<key-property name="descendantId" column="descendantId"/>
+		</composite-id>
+		<property name="level" column="level_"/>
+		<property name="status" column="status"/>
+	</class>
+
+	<class name="com.agloco.model.AGMemberTemp" table="AG_M_Temp" dynamic-update="true" dynamic-insert="true">
+		<id name="memberId" column="memberId">
+			<generator class="native">
+			</generator>
+		</id>
+
+		<!--property name="referralCode" formula="AES_DECRYPT(referralCode, 'agloco')"/-->
+		<!--property name="memberCode" formula="AES_DECRYPT(memberCode, 'agloco')"/-->
+		<property name="password" formula="AES_DECRYPT(password_, 'agloco')"/>
+		<property name="firstName" formula="AES_DECRYPT(firstName, 'agloco')"/>
+		<property name="middleName" formula="AES_DECRYPT(middleName, 'agloco')"/>
+		<property name="lastName" formula="AES_DECRYPT(lastName, 'agloco')"/>
+		<!--property name="emailAddress" formula="AES_DECRYPT(emailAddress, 'agloco')"/-->
+		<property name="birthDate" formula="AES_DECRYPT(birthDate, 'agloco')"/>
+		<property name="address1" formula="AES_DECRYPT(address1, 'agloco')"/>
+		<property name="address2" formula="AES_DECRYPT(address2, 'agloco')"/>
+		<property name="city" formula="AES_DECRYPT(city, 'agloco')"/>
+		<property name="state" formula="AES_DECRYPT(state_, 'agloco')"/>
+		<property name="postCode" formula="AES_DECRYPT(postCode, 'agloco')"/>
+		<property name="country" formula="AES_DECRYPT(country, 'agloco')"/>
+
+		<!--property name="encReferralCode" column="referralCode"/-->
+		<!--property name="encMemberCode" column="memberCode"/-->
+		<property name="encPassword" column="password_"/>
+		<property name="encFirstName" column="firstName"/>
+		<property name="encMiddleName" column="middleName"/>
+		<property name="encLastName" column="lastName"/>
+		<!--property name="encEmailAddress" column="emailAddress"/-->
+		<property name="encBirthDate" column="birthDate"/>
+		<property name="encAddress1" column="address1"/>
+		<property name="encAddress2" column="address2"/>
+		<property name="encCity" column="city"/>
+		<property name="encState" column="state_"/>
+		<property name="encPostCode" column="postCode"/>
+		<property name="encCountry" column="country"/>
+
+		<property name="referralCode" column="referralCode"/>
+		<property name="memberCode" column="memberCode"/>
+		<property name="emailAddress" column="emailAddress"/>
+		<property name="createDate" column="createDate"/>
+		<property name="modifiedDate" column="modifiedDate"/>
+		<property name="mailCount" column="mailCount"/>
+		<property name="lastMailTime" column="lastMailTime"/>
+		<property name="mailResult" column="mailResult"/>
+		<property name="userId" column="userId"/>
+		<property name="status" column="status"/>
+	</class>
+
+	<class name="com.agloco.model.AGMemberAudit" table="AG_M_Audit" dynamic-update="true" dynamic-insert="true">
+		<id name="auditId" column="auditId">
+			<generator class="native">
+			</generator>
+		</id>
+
+		<property name="operator" column="operator"/>
+		<property name="operation" column="operation"/>
+		<property name="operateDate" column="operateDate"/>
+
+		<property name="userId" column="userId"/>
+		<property name="memberId" column="memberId"/>
+
+		<!--property name="memberCode" formula="AES_DECRYPT(memberCode, 'agloco')"/-->
+		<property name="password" formula="AES_DECRYPT(password_, 'agloco')"/>
+		<property name="firstName" formula="AES_DECRYPT(firstName, 'agloco')"/>
+		<property name="middleName" formula="AES_DECRYPT(middleName, 'agloco')"/>
+		<property name="lastName" formula="AES_DECRYPT(lastName, 'agloco')"/>
+		<!--property name="emailAddress" formula="AES_DECRYPT(emailAddress, 'agloco')"/-->
+		<property name="birthDate" formula="AES_DECRYPT(birthDate, 'agloco')"/>
+		<property name="address1" formula="AES_DECRYPT(address1, 'agloco')"/>
+		<property name="address2" formula="AES_DECRYPT(address2, 'agloco')"/>
+		<property name="city" formula="AES_DECRYPT(city, 'agloco')"/>
+		<property name="state" formula="AES_DECRYPT(state_, 'agloco')"/>
+		<property name="postCode" formula="AES_DECRYPT(postCode, 'agloco')"/>
+		<property name="country" formula="AES_DECRYPT(country, 'agloco')"/>
+
+		<!--property name="encMemberCode" column="memberCode"/-->
+		<property name="encPassword" column="password_"/>
+		<property name="encFirstName" column="firstName"/>
+		<property name="encMiddleName" column="middleName"/>
+		<property name="encLastName" column="lastName"/>
+		<!--property name="encEmailAddress" column="emailAddress"/-->
+		<property name="encBirthDate" column="birthDate"/>
+		<property name="encAddress1" column="address1"/>
+		<property name="encAddress2" column="address2"/>
+		<property name="encCity" column="city"/>
+		<property name="encState" column="state_"/>
+		<property name="encPostCode" column="postCode"/>
+		<property name="encCountry" column="country"/>
+
+		<property name="memberCode" column="memberCode"/>
+		<property name="emailAddress" column="emailAddress"/>
+		<property name="createDate" column="createDate"/>
+		<property name="modifiedDate" column="modifiedDate"/>
+		<property name="status" column="status"/>
+		<property name="reserved1" column="reserved1"/>
+		<property name="reserved2" column="reserved2"/>
+		<property name="reserved3" column="reserved3"/>
+
+		
+	</class>
+
+	<class name="com.agloco.model.AGUser" table="User_" dynamic-update="true" dynamic-insert="true">
+		<id name="userId" column="userId">
+			<generator class="assigned">
+			</generator>
+		</id>
+		<property name="companyId" column="companyId"/>
+		<property name="createDate" column="createDate"/>
+		<property name="lastLoginDate" column="lastLoginDate"/>
+		<property name="lastLoginIP" column="lastLoginIP"/>
+		<property name="modifiedDate" column="modifiedDate"/>
+		<property name="password" column="password_"/>
+		<property name="emailAddress" column="emailAddress"/>
+		<property name="languageId" column="languageId"/>
+		<property name="active" column="active_"/>
+		<property name="agreedToTermsOfUse" column="agreedToTermsOfUse"/>
+	</class>
+	
+	<class name="com.agloco.model.AGMemberCount" table="AG_M_Count" dynamic-update="true" dynamic-insert="true">
+		<id name="memberId" column="memberId">
+			<generator class="assigned"></generator>
+		</id>
+		<property name="count" column="count_"></property>
+	</class>
+	
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false">
+	<class name="com.viewbar.addon.model.VBFiles" table="VB_Files"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="viewbarId" column="viewbarId" />
+		<property name="fileName" column="fileName" />
+		<property name="filePath" column="filePath" />
+		<property name="md5" column="md5" />
+		<property name="description" column="description" />
+	</class>
+
+	<class name="com.viewbar.addon.model.VBViewbar" table="VB_Viewbar"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="viewbarId" column="viewbarId">
+			<generator class="assigned"></generator>
+		</id>
+		<property name="osVersion" column="osVersion" />
+		<property name="createDate" column="createDate" />
+		<property name="releaseDate" column="releaseDate" />
+		<property name="expireDate" column="expireDate" />
+		<property name="rootPath" column="rootPath" />
+		<property name="downloadCount" column="downloadCount" />
+		<property name="downloadSCount" column="downloadSCount" />
+		<property name="description" column="description" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,16 @@
+#!/bin/sh
+# CLASSPATH="$JAVA_HOME"/lib/
+# JAVA_OPTS=-verbose
+JAVA_HOME="/usr/java/jdk1.5.0_08"
+_RUNJAVA="$JAVA_HOME"/bin/java
+AMAXGS_HOME=`pwd`
+CLASSES="$AMAXGS_HOME"/addon
+LIB="$AMAXGS_HOME"/lib
+WLIB="$AMAXGS_HOME"/ROOT/WEB-INF/lib
+WCLASSES="$AMAXGS_HOME"/ROOT/WEB-INF/classes
+MAINCLASS=com.amaxgs.addon.Agloco
+MAINARGS=$1
+CLASSPATH=.:"$CLASSES":"$WCLASSES":"$WLIB"/activemq.jar:"$WLIB"/ant.jar:"$WLIB"/antlr.jar:"$WLIB"/aopalliance.jar:"$WLIB"/asm-attrs.jar:"$WLIB"/asm.jar:"$WLIB"/axis-ant.jar:"$WLIB"/axis.jar:"$WLIB"/burlap.jar:"$WLIB"/cglib.jar:"$WLIB"/commons-beanutils.jar:"$WLIB"/commons-codec.jar:"$WLIB"/commons-collections.jar:"$WLIB"/commons-configuration.jar:"$WLIB"/commons-dbcp.jar:"$WLIB"/commons-digester.jar:"$WLIB"/commons-discovery.jar:"$WLIB"/commons-email.jar:"$WLIB"/commons-fileupload.jar:"$WLIB"/commons-httpclient.jar:"$WLIB"/commons-io.jar:"$WLIB"/commons-lang.jar:"$WLIB"/commons-logging.jar:"$WLIB"/commons-pool.jar:"$WLIB"/commons-validator.jar:"$WLIB"/compass.jar:"$WLIB"/compression-filter.jar:"$WLIB"/concurrent.jar:"$WLIB"/counter-ejb.jar:"$WLIB"/displaytag.jar:"$WLIB"/documentlibrary-ejb.jar:"$WLIB"/dom4j.jar:"$WLIB"/easyconf.jar:"$WLIB"/ehcache-1.2.jar:"$WLIB"/ext-ejb.jar:"$WLIB"/friki.jar:"$WLIB"/gif89.jar:"$WLIB"/google.jar:"$WLIB"/hessian.jar:"$WLIB"/hibernate3.jar:"$WLIB"/httpbridge.jar:"$WLIB"/icq.jar:"$WLIB"/informa.jar:"$WLIB"/j2ee-management.jar:"$WLIB"/jackrabbit-core.jar:"$WLIB"/jackrabbit-index-filters.jar:"$WLIB"/jackrabbit-jcr-commons.jar:"$WLIB"/jaim.jar:"$WLIB"/jaxen.jar:"$WLIB"/jaxrpc.jar:"$WLIB"/jazzy.jar:"$WLIB"/jcommon.jar:"$WLIB"/jcr.jar:"$WLIB"/jdom.jar:"$WLIB"/jfreechart.jar:"$WLIB"/jgroups.jar:"$WLIB"/jsonrpc.jar:"$WLIB"/jstl-impl.jar:"$WLIB"/jstl.jar:"$WLIB"/jta.jar:"$WLIB"/lock-ejb.jar:"$WLIB"/log4j.jar:"$WLIB"/lucene.jar:"$WLIB"/mail-ejb.jar:"$WLIB"/msnm.jar:"$WLIB"/nekohtml.jar:"$WLIB"/nfc-server.jar:"$WLIB"/odmg.jar:"$WLIB"/oro.jar:"$WLIB"/oscache.jar:"$WLIB"/pdfbox.jar:"$WLIB"/poi-contrib.jar:"$WLIB"/poi-scratchpad.jar:"$WLIB"/poi.jar:"$WLIB"/portal-ejb.jar:"$WLIB"/portals-bridges.jar:"$WLIB"/quartz.jar:"$WLIB"/saaj.jar:"$WLIB"/secure-filter.jar:"$WLIB"/simplecaptcha.jar:"$WLIB"/slf4j-log4j12.jar:"$WLIB"/soap.jar:"$WLIB"/sophia-pagination-1.0.1.jar:"$WLIB"/spring.jar:"$WLIB"/strip-filter.jar:"$WLIB"/struts-el.jar:"$WLIB"/struts.jar:"$WLIB"/textmining.jar:"$WLIB"/trove.jar:"$WLIB"/util-bridges.jar:"$WLIB"/util-java.jar:"$WLIB"/util-taglib.jar:"$WLIB"/util-wsrp.jar:"$WLIB"/velocity.jar:"$WLIB"/vssver.scc:"$WLIB"/wbmp.jar:"$WLIB"/wsdl4j.jar:"$WLIB"/xml-apis.jar:"$WLIB"/ym.jar:"$LIB"/activation.jar:"$LIB"/c3p0.jar:"$LIB"/ejb.jar:"$LIB"/fscontext.jar:"$LIB"/javax.servlet.jar:"$LIB"/javax.servlet.jsp.jar:"$LIB"/jms.jar:"$LIB"/jta.jar:"$LIB"/jxl2.4.2.jar:"$LIB"/mail.jar:"$LIB"/mysql-connector-java-3.1.12-bin.jar:"$LIB"/mysql-connector-java-5.0.4-bin.jar:"$LIB"/naming-factory-dbcp.jar:"$LIB"/naming-factory.jar:"$LIB"/naming-resources.jar:"$LIB"/portal-kernel.jar:"$LIB"/portlet.jar:"$LIB"/providerutil.jar:"$LIB"/sophia-pagination-1.0.1.jar:"$LIB"/vssver.scc:"$LIB"/xercesImpl.jar:
+echo "Using CLASSPATH:  $CLASSPATH"
+echo "Using MAINCLASS:  $MAINCLASS"
+$_RUNJAVA $JAVA_OPTS -classpath $CLASSPATH $MAINCLASS $MAINARGS

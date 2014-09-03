@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{z(Z) yyyy-MM-dd HH:mm:ss} %-p [%c:%L] %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="TRACE" />
+			<param name="LevelMax" value="FATAL" />
+		</filter>
+	</appender>
+	
+	<appender name="ADDON"
+		class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="addon_error.log" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{z(Z) yyyy-MM-dd HH:mm:ss}[%c] -- %p -- %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="TRACE" />
+			<param name="LevelMax" value="FATAL" />
+		</filter>
+	</appender>
+
+	<category name="org.apache">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.axis">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.commons.digester">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.commons.beanutils">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.commons.fileupload">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.commons.httpclient">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.commons.validator">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.jackrabbit">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.myfaces">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.struts">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.velocity">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.apache.wsrp4j">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="net.sf.hibernate">
+		<priority value="WARN" />
+	</category>
+
+	<category name="org.hibernate">
+		<priority value="WARN" />
+	</category>
+
+	<category name="org.hibernate.cfg.HibernateConfiguration">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.hibernate.cfg.Environment">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.hibernate.cfg.SettingsFactory">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.agloco">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.agloco.mail.MailEngine">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.amaxgs.addon">
+		<priority value="DEBUG" />
+	</category>
+	
+	<root>
+		<priority value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="ADDON"/>
+	</root>
+
+</log4j:configuration>

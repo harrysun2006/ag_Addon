@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false">
+
+	<class name="com.agloco.model.AGBadword" table="AG_Badword" dynamic-update="true" dynamic-insert="true">
+		<cache usage="read-write" />
+		<id name="badwordId" column="badwordId">
+			<generator class="identity">
+			</generator>
+		</id>
+
+		<property name="category" column="category"/>
+		<property name="companyId" column="companyId"/>
+		<property name="word" column="word"/>
+	</class>
+
+	<class name="com.agloco.model.AGConfig" table="AG_Config" dynamic-update="true" dynamic-insert="true">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.agloco.model.AGConfigPK">
+			<key-property name="name" column="name"/>
+			<key-property name="companyId" column="companyId"/>
+		</composite-id>
+
+		<property name="value" column="value_"/>
+		<property name="content" column="content"/>
+		<property name="type" column="type_"/>
+	</class>
+
+	<class name="com.agloco.model.AGCounter" table="AG_Counter" dynamic-insert="true" dynamic-update="true">
+		<id name="name" type="string">
+			<generator class="assigned">
+			</generator>
+		</id>
+		<property name="value" column="value_" type="string"/>
+	</class>
+
+	<class name="com.agloco.model.AGDictionary" table="AG_Dictionary" dynamic-update="true" dynamic-insert="true">
+		<cache usage="read-write" />
+		<id name="dictionaryId" column="dictionaryId">
+			<generator class="identity">
+			</generator>
+		</id>
+
+		<property name="code" column="code"/>
+		<property name="value" column="value_"/>
+		<property name="order" column="order_"/>
+		<property name="active" column="active_"/>
+
+    <set name="details" lazy="true" inverse="true" cascade="all-delete-orphan" order-by="dictionaryDetailId">
+    	<key column="dictionaryDetailId" update="true"/>
+    	<one-to-many class="com.agloco.model.AGDictionaryDetail" />
+    </set>
+	</class>
+
+	<class name="com.agloco.model.AGDictionaryDetail" table="AG_DictionaryD" dynamic-update="true" dynamic-insert="true">
+		<cache usage="read-write" />
+		<id name="dictionaryDetailId" column="dictionaryDetailId">
+			<generator class="identity">
+			</generator>
+		</id>
+
+    <property name="dictionaryId" column="dictionaryId"/>
+		<property name="language" column="language_"/>
+		<property name="country" column="country"/>
+		<property name="text" column="text_"/>
+	</class>
+	
+	<class name="com.agloco.model.AGQuery" table="AG_Query" dynamic-update="true" dynamic-insert="true">
+		<cache usage="read-write" />
+		<id name="queryId" column="queryId">
+			<generator class="identity">
+			</generator>
+		</id>
+
+		<property name="queryName" column="queryName"/>
+		<property name="query" column="query"/>
+		<property name="queryParamsHTML"  column="queryParamsHTML"/>
+		<property name="queryTitle" column="queryTitle"/>
+		<property name="queryType" column="queryType"/>
+		<property name="preScript" column="preScript"/>
+		<property name="postScript" column="postScript"/>
+		<property name="resultDisplayScript" column="resultDisplayScript"/>
+		<property name="queryDescription" column="queryDescription"/>
+		<property name="createDate" column="createDate"/>
+	</class>
+	
+	<class name="com.agloco.model.AGMailMessage" table="AG_Mail_Msg" dynamic-update="true" dynamic-insert="true" >
+		<id name="id" column="id">
+			<generator class="native">
+			</generator>
+		</id>
+		<property name="message" column="message"/>
+	</class>
+
+	<class name="com.agloco.model.MessageObject" table="AG_Log" dynamic-update="true" dynamic-insert="true">
+		<id name="logId" column="logId" type="java.lang.Integer" length="11">
+			<generator class="identity">
+			</generator>
+		</id>
+
+		<property name="createDate" column="createDate" not-null="true"/>
+		<property name="thread" column="thread" type="java.lang.String" length="75"/>
+		<property name="priority"  column="priority" type="java.lang.String" length="75"/>
+		<property name="category" column="category" type="java.lang.String" length="75"/>
+		<property name="message" column="message" type="text"/>
+		<property name="exception" column="exception" type="java.lang.String" length="255"/>
+		<property name="userId" column="userId" type="java.lang.String" length="75"/>
+		<property name="emailAddress" column="emailAddress" type="java.lang.String" length="100"/>
+		<property name="memberCode" column="memberCode" type="java.lang.String" length="75"/>
+		<property name="referralCode" column="referralCode" type="java.lang.String" length="75"/>
+		<property name="operate" column="operate" type="java.lang.String" length="15"/>
+		<property name="ip" column="ip" type="java.lang.String" length="24"/>
+		<property name="serverIp" column="serverIp" type="java.lang.String" length="128"/>
+		<property name="sessionId" column="sessionId" type="java.lang.String" length="75"/>
+		<property name="userAgent" column="userAgent" type="java.lang.String" length="255"/>
+		<property name="description" column="description" type="java.lang.String" length="255"/>
+	</class>
+	
+	<class name="com.agloco.model.AdminMessageObject" table="AG_Admin_Log" dynamic-update="true" dynamic-insert="true">
+		<id name="logId" column="logId" type="java.lang.Integer" length="11">
+			<generator class="identity">
+			</generator>
+		</id>
+
+		<property name="createDate" column="createDate" not-null="true"/>
+		<property name="thread" column="thread" type="java.lang.String" length="75"/>
+		<property name="priority"  column="priority" type="java.lang.String" length="75"/>
+		<property name="category" column="category" type="java.lang.String" length="75"/>
+		<property name="message" column="message" type="text"/>
+		<property name="exception" column="exception" type="java.lang.String" length="255"/>
+		<property name="userId" column="userId" type="java.lang.String" length="75"/>
+		<property name="ip" column="ip" type="java.lang.String" length="24"/>
+		<property name="className" column="className" type="java.lang.String" length="255"/>
+		<property name="method" column="method" type="text"/>
+		<property name="operate" column="operate" type="java.lang.String" length="255"/>
+		<property name="entityClass" column="entityClass" type="java.lang.String" length="255"/>
+		<property name="primaryKey" column="primaryKey" type="text"/>
+		<property name="description" column="description" type="text"/>
+	</class>
+	
+	<class name="com.agloco.model.AdminLogConfig" table="AG_AL_Config" dynamic-update="true" dynamic-insert="true">
+		<cache usage="read-write" />
+		<id name="id" column="id">
+			<generator class="native">
+			</generator>
+		</id>
+		<property name="className" column="className"/>
+		<property name="method" column="method"/>
+		<property name="script" column="script"/>
+		<property name="active" column="active_"/>
+	</class>
+
+
+</hibernate-mapping>

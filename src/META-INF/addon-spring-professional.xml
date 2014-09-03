@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+
+	<bean class="com.agloco.spring.BeanFactoryAglocoProcessor"/>
+	<!-- remove this on Apr 30, 2007, separate addon from admin
+	<bean class="com.amaxgs.addon.BeanFactoryProcessor"/>
+
+	<bean id="com.addon.mail.MailQCF" class="org.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory">
+			<bean class="org.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL">
+					<value>tcp://localhost:61617</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	-->
+
+	<bean id="addonDao" class="com.amaxgs.addon.service.AddonDaoHibernate">
+		<property name="sessionFactory">
+			<ref bean="liferaySessionFactory" />
+		</property>
+	</bean>
+	<bean id="addonTarget" class="com.amaxgs.addon.service.AddonServiceImpl">
+		<property name="addonDao">
+			<ref bean="addonDao"/>
+		</property>
+	</bean>
+	<bean id="com.amaxgs.addon.service.AddonService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" lazy-init="true">
+		<property name="transactionManager">
+			<ref bean="liferayTransactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="addonTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- member dao -->
+	<bean id="com.agloco.service.dao.hibernate.MemberDaoHibernate" class="com.agloco.service.dao.hibernate.MemberDaoHibernate" lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="liferaySessionFactory" />
+		</property>
+	</bean>
+	<bean id="com.agloco.service.dao.util.MemberDaoUtil" class="com.agloco.service.dao.util.MemberDaoUtil" lazy-init="true">
+		<property name="memberDao">
+			<ref bean="com.agloco.service.dao.hibernate.MemberDaoHibernate" />
+		</property>
+	</bean>
+
+	<!-- member service -->
+	<bean id="com.agloco.service.impl.MemberServiceImpl" class="com.agloco.service.impl.MemberServiceImpl"/>
+	<bean id="com.agloco.service.MemberService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" lazy-init="true">
+		<property name="transactionManager">
+			<ref bean="liferayTransactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="com.agloco.service.impl.MemberServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="com.agloco.service.util.MemberServiceUtil" class="com.agloco.service.util.MemberServiceUtil" lazy-init="true">
+		<property name="memberService">
+			<ref bean="com.agloco.service.MemberService" />
+		</property>
+	</bean>
+
+	<!-- common dao and service -->
+	<bean id="com.agloco.service.dao.hibernate.CommonDaoHibernate" class="com.agloco.service.dao.hibernate.CommonDaoHibernate" lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="liferaySessionFactory" />
+		</property>
+	</bean>
+	<bean id="com.agloco.service.dao.util.CommonDaoUtil" class="com.agloco.service.dao.util.CommonDaoUtil" lazy-init="true">
+		<property name="commonDao">
+			<ref bean="com.agloco.service.dao.hibernate.CommonDaoHibernate" />
+		</property>
+	</bean>
+	
+	<bean id="com.agloco.service.impl.CommonServiceImpl" class="com.agloco.service.impl.CommonServiceImpl" lazy-init="true"/>
+	<bean id="com.agloco.service.CommonService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" lazy-init="true">
+		<property name="transactionManager">
+			<ref bean="liferayTransactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="com.agloco.service.impl.CommonServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="com.agloco.service.util.CommonServiceUtil" class="com.agloco.service.util.CommonServiceUtil" lazy-init="true">
+		<property name="commonService">
+			<ref bean="com.agloco.service.CommonService" />
+		</property>
+	</bean>
+
+	<!-- mail service -->
+	<bean id="com.agloco.service.impl.GeneralMailExcluder" class="com.agloco.service.impl.GeneralMailExcluder" lazy-init="true"/>
+
+	<bean id="mailCharsetFilter" class="com.agloco.mail.filter.MailCharsetFilter" lazy-init="true"/>
+	<bean id="mailTypeFilter" class="com.agloco.mail.filter.MailTypeFilter" lazy-init="true"/>
+	<bean id="com.agloco.service.impl.MailServiceImpl" class="com.agloco.service.impl.MailServiceImpl" lazy-init="true">
+		<property name="excluder">
+			<ref bean="com.agloco.service.impl.GeneralMailExcluder" />
+		</property>
+		<property name="filterList">
+			<list>
+				<ref bean="mailCharsetFilter" />
+				<ref bean="mailTypeFilter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="com.agloco.service.MailService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" lazy-init="true">
+		<property name="transactionManager">
+			<ref bean="liferayTransactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="com.agloco.service.impl.MailServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="com.agloco.service.util.MailServiceUtil" class="com.agloco.service.util.MailServiceUtil">
+		<property name="mailService">
+			<ref bean="com.agloco.service.MailService" />
+		</property>
+	</bean>
+	
+	<bean id="broker" class="org.activemq.spring.BrokerFactoryBean">   
+		<property name="config" value="classpath:/activemq.xml"/>  
+	</bean>
+
+	<bean id="com.agloco.mail.MailQCF" class="org.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory">
+			<bean class="org.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL">
+					<value>tcp://localhost:61617</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean name="com.agloco.mail.MailQueue" class="org.activemq.message.ActiveMQQueue" autowire="constructor">
+		<constructor-arg>
+			<value>com.agloco.mail.MailQueue</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- viewbar -->
+	<!--bean id="viewbarDataSourceTarget" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="true">
+		<property name="jndiName">
+			<value>java:comp/env/jdbc/ViewbarPool</value>
+		</property>
+	</bean>
+	<bean id="viewbarDataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" lazy-init="true">
+		<property name="targetDataSource">
+			<ref bean="viewbarDataSourceTarget" />
+		</property>
+	</bean>
+	<bean id="viewbarSessionFactory" class="com.liferay.portal.spring.hibernate.HibernateConfiguration" lazy-init="true">
+		<property name="dataSource">
+			<ref bean="viewbarDataSource" />
+		</property>
+	</bean>
+	<bean id="viewbarTransactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager" lazy-init="true">
+		<property name="dataSource">
+			<ref bean="viewbarDataSource" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="viewbarSessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="viewbarDao" class="com.amaxgs.addon.service.ViewbarDaoHibernate">
+		<property name="sessionFactory">
+			<ref bean="liferaySessionFactory" />
+		</property>
+	</bean>
+	<bean id="addonTarget" class="com.amaxgs.addon.service.AddonServiceImpl">
+		<property name="addonDao">
+			<ref bean="addonDao"/>
+		</property>
+	</bean>
+	<bean id="com.amaxgs.addon.service.AddonService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" lazy-init="true">
+		<property name="transactionManager">
+			<ref bean="liferayTransactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="addonTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean-->
+</beans>	
